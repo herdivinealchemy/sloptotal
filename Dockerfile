@@ -16,7 +16,6 @@ RUN useradd -r -s /bin/false sloptotal && \
     mkdir -p /app/models /app/data && \
     chown -R sloptotal:sloptotal /app/models /app/data
 
-USER sloptotal
 
 ENV HF_HOME=/app/models
 EXPOSE 8000
