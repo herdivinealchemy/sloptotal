@@ -4,6 +4,27 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Website](https://img.shields.io/badge/website-sloptotal.com-blue)](https://sloptotal.com)
 
+---
+
+> **Fork note.** This is a fork of [pablocaeg/sloptotal](https://github.com/pablocaeg/sloptotal),
+> kept only so it can be deployed as a Railway service for a private
+> writing-assistant app. It carries two Railway-specific patches to the
+> `Dockerfile` and nothing else — pull upstream changes normally.
+>
+> 1. **`USER sloptotal` removed** — Railway mounts the persistent volume over
+>    `/app/models` root-owned at runtime, after the image's build-time
+>    `chown`, so the non-root user can't write the HuggingFace cache
+>    (`PermissionError at /app/models/hub`). Running as root sidesteps it;
+>    acceptable for an internal-only service.
+> 2. **`CMD` bind host `0.0.0.0` → `::`** — Railway's private network is IPv6.
+>    A service bound IPv4-only answers the public edge but gives other
+>    services `ECONNREFUSED` over `*.railway.internal`. `::` binds IPv6 and
+>    still accepts IPv4-mapped connections.
+>
+> Everything below is upstream.
+
+---
+
 **VirusTotal for AI slop detection.** Scan any text or URL with 23 independent detection engines running entirely on your hardware. No data sent to third parties.
 
 ## What it does
